@@ -90,7 +90,7 @@ def apply_adjustments(image, adjustment_type, adjustment_value):
         yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
         yuv[..., 0] = cv2.equalizeHist(yuv[..., 0])
         adjusted_image = cv2.cvtColor(yuv, cv2.COLOR_YUV2BGR)
-        
+
     else:
         adjusted_image = image
 
@@ -105,6 +105,10 @@ def index():
 @app.route('/image-adjustments')
 def chane_img():
     return render_template('image-adjustments.html')
+
+@app.route('/remove-noice')
+def remove_noice():
+    return render_template('remove-noice.html')
 
 @app.route('/image-adjustments', methods=['POST'])
 def image_adjustments():
