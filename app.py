@@ -73,13 +73,60 @@ def apply_filter(image, filter_name):
         return apply_thresholding(image)
     else:
         return image
+    
+def apply_adjustments(image, adjustment_type, adjustment_value):
+    if adjustment_type == 'brightness':
+    
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        hsv[..., 2] = np.clip(hsv[..., 2] + adjustment_value, 0, 255)
+        adjusted_image = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+    elif adjustment_type == 'saturation':
+        hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+        hsv[..., 1] = np.clip(hsv[..., 1] + adjustment_value, 0, 255)
+        adjusted_image = cv2.cvtColor(hsv, cv2.COLOR_HSV2BGR)
+    elif adjustment_type == 'contrast':
+        yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
+        yuv[..., 0] = cv2.equalizeHist(yuv[..., 0])
+        adjusted_image = cv2.cvtColor(yuv, cv2.COLOR_YUV2BGR)
+    else:
+        adjusted_image = image
+
+    return adjusted_image
+
+
 
 @app.route('/')
 def index():
     return render_template('index.html')
 
+@app.route('/image-adjustments')
+def chane_img():
+    return render_template('image-adjustments.html')
+
+@app.route('/image-adjustments', methods=['POST'])
+def image_adjustments():
+    image_file = request.files['image']
+    image_array = np.frombuffer(image_file.read(), np.uint8)
+    image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
+
+    # Get adjustment type and value
+    adjustment_type = request.form['adjustmentType']
+    adjustment_value = int(request.form['adjustmentValue'])
+
+    print("Adjustment type: " + adjustment_type + " Value: " + str(adjustment_value))
+
+    # Apply adjustments
+    adjusted_image = apply_adjustments(image, adjustment_type, adjustment_value)
+
+    # Encode adjusted image to base64
+    _, image_bytes = cv2.imencode('.jpg', adjusted_image)
+    encoded_image = base64.b64encode(image_bytes).decode('utf-8')
+
+    return 'data:image/jpeg;base64,' + encoded_image 
+
 @app.route('/filter', methods=['POST'])
 def filter():
+    print("filter open")
     image = request.files['image']
     npimg = np.fromstring(image.read(), np.uint8)
     cvimg = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
