@@ -9,8 +9,8 @@
     <style>
         body {
             background-color: #f8f9fa;
-            position: relative; /* Ensure relative positioning for absolute positioning */
-            min-height: 100vh; /* Set minimum height to fill the viewport */
+            position: relative;
+            min-height: 100vh;
         }
         .card {
             border: none;
@@ -77,8 +77,6 @@
                         <option value="original">Original (No Filter)</option>
                         <option value="median_filter">Median Filter</option>
                         <option value="gaussian_filter">Gaussian Filter</option>
-                        <option value="bilateral_filter">Bilateral Filter</option>
-                        <option value="non_local_means">Non-Local Means Denoising</option>
                     </select>                    
                     <button type="button" class="btn btn-primary btn-block mb-4" id="apply-filter">Apply Filter</button>
                     <div>

@@ -80,11 +80,6 @@ def apply_median_filter(image):
 def apply_gaussian_filter(image):
     return cv2.GaussianBlur(image, (5, 5), 0)
 
-def apply_bilateral_filter(image):
-    return cv2.bilateralFilter(image, 9, 75, 75)
-
-def apply_non_local_means(image):
-    return cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
 
 
     
@@ -93,10 +88,6 @@ def apply_noise(image, filter_name):
         return apply_median_filter(image)
     elif filter_name == 'gaussian_filter':
         return apply_gaussian_filter(image)
-    elif filter_name == 'bilateral_filter':
-        return apply_bilateral_filter(image)
-    elif filter_name == 'non_local_means':
-        return apply_non_local_means(image)
     else:
         return image
     
@@ -144,7 +135,6 @@ def image_adjustments():
     image_array = np.frombuffer(image_file.read(), np.uint8)
     image = cv2.imdecode(image_array, cv2.IMREAD_COLOR)
 
-    # Get adjustment type and value
     adjustment_type = request.form['adjustmentType']
     adjustment_value = int(request.form['adjustmentValue'])
 
@@ -153,7 +143,7 @@ def image_adjustments():
     # Apply adjustments
     adjusted_image = apply_adjustments(image, adjustment_type, adjustment_value)
 
-    # Encode adjusted image
+    # Encode
     _, image_bytes = cv2.imencode('.jpg', adjusted_image)
     encoded_image = base64.b64encode(image_bytes).decode('utf-8')
 
