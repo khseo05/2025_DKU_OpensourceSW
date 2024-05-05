@@ -89,7 +89,7 @@
                     <div>
                         <h5 class="text-center mt-3">Other Tools</h5>
                         <a href="/image-adjustments" class="btn btn-link">Image Adjustments</a>
-                        <a href="/remove-noice" class="btn btn-link">Remove Noice</a>
+                        <a href="/remove-noise" class="btn btn-link">Remove Noise</a>
                     </div>
                 </div>
             </div>
@@ -127,6 +127,7 @@
                 img.classList.add('img-fluid');
                 document.getElementById('original-image').innerHTML = '';
                 document.getElementById('original-image').appendChild(img);
+                document.getElementById('edited-image').innerHTML = '';
             };
             reader.readAsDataURL(file);
         });

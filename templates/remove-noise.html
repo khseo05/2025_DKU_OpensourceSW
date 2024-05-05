@@ -75,21 +75,16 @@
                     </div>
                     <select class="form-select mb-4" id="filter-select">
                         <option value="original">Original (No Filter)</option>
-                        <option value="grayscale">Grayscale</option>
-                        <option value="smoothing">Smoothing</option>
-                        <option value="edge_detection">Edge Detection</option>
-                        <option value="sepia">Sepia Tone</option>
-                        <option value="sharpening">Sharpening</option>
-                        <option value="embossing">Embossing</option>
-                        <option value="invert">Invert</option>
-                        <option value="posterize">Posterize</option>
-                        <option value="thresholding">Thresholding</option>
-                    </select>
+                        <option value="median_filter">Median Filter</option>
+                        <option value="gaussian_filter">Gaussian Filter</option>
+                        <option value="bilateral_filter">Bilateral Filter</option>
+                        <option value="non_local_means">Non-Local Means Denoising</option>
+                    </select>                    
                     <button type="button" class="btn btn-primary btn-block mb-4" id="apply-filter">Apply Filter</button>
                     <div>
                         <h5 class="text-center mt-3">Other Tools</h5>
                         <a href="/image-adjustments" class="btn btn-link">Image Adjustments</a>
-                        <a href="/remove-noice" class="btn btn-link">Remove Noice</a>
+                        <a href="/" class="btn btn-link">Image Filter</a>
                     </div>
                 </div>
             </div>
@@ -127,6 +122,7 @@
                 img.classList.add('img-fluid');
                 document.getElementById('original-image').innerHTML = '';
                 document.getElementById('original-image').appendChild(img);
+                document.getElementById('edited-image').innerHTML = '';
             };
             reader.readAsDataURL(file);
         });
@@ -150,7 +146,7 @@
             formData.append('image', file);
             formData.append('filter', filterSelect.value);
 
-            fetch('/filter', {
+            fetch('/remove-noise', {
                 method: 'POST',
                 body: formData
             })

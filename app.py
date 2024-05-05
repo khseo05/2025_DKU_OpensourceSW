@@ -74,6 +74,32 @@ def apply_filter(image, filter_name):
     else:
         return image
     
+def apply_median_filter(image):
+    return cv2.medianBlur(image, 5)
+
+def apply_gaussian_filter(image):
+    return cv2.GaussianBlur(image, (5, 5), 0)
+
+def apply_bilateral_filter(image):
+    return cv2.bilateralFilter(image, 9, 75, 75)
+
+def apply_non_local_means(image):
+    return cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
+
+
+    
+def apply_noise(image, filter_name):
+    if filter_name == 'median_filter':
+        return apply_median_filter(image)
+    elif filter_name == 'gaussian_filter':
+        return apply_gaussian_filter(image)
+    elif filter_name == 'bilateral_filter':
+        return apply_bilateral_filter(image)
+    elif filter_name == 'non_local_means':
+        return apply_non_local_means(image)
+    else:
+        return image
+    
 def apply_adjustments(image, adjustment_type, adjustment_value):
 
     if adjustment_type == 'brightness':
@@ -106,9 +132,11 @@ def index():
 def chane_img():
     return render_template('image-adjustments.html')
 
-@app.route('/remove-noice')
-def remove_noice():
-    return render_template('remove-noice.html')
+@app.route('/remove-noise')
+def remove_noise():
+    return render_template('remove-noise.html')
+
+
 
 @app.route('/image-adjustments', methods=['POST'])
 def image_adjustments():
@@ -142,6 +170,18 @@ def filter():
     _, buffer = cv2.imencode('.jpg', filtered_image)
     encoded_image = base64.b64encode(buffer).decode('utf-8')
     return 'data:image/jpeg;base64,' + encoded_image
+
+@app.route('/remove-noise', methods=['POST'])
+def noise():
+    print("Noise open")
+    noise_image = request.files['image']
+    npimg = np.fromstring(noise_image.read(), np.uint8)
+    cvimg = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
+    filter_name = request.form['filter']
+    filtered_image = apply_noise(cvimg, filter_name)
+    _, img = cv2.imencode('.jpg', filtered_image)
+    noise_image = base64.b64encode(img).decode('utf-8')
+    return 'data:image/jpeg;base64,' + noise_image
 
 if __name__ == '__main__':
     app.run(debug=True)
