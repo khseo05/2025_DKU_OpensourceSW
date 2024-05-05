@@ -68,11 +68,24 @@
                         <input type="file" class="custom-file-input" id="upload-image" accept="image/*">
                         <label class="custom-file-label" for="upload-image">Choose Image</label>
                     </div>
-                    <select class="form-select mb-3" id="filter-select">
+                    <select class="form-select mb-4" id="filter-select">
+                        <option value="original">Original (No Filter)</option>
                         <option value="grayscale">Grayscale</option>
-                        <!-- Add more filter options here -->
+                        <option value="smoothing">Smoothing</option>
+                        <option value="edge_detection">Edge Detection</option>
+                        <option value="sepia">Sepia Tone</option>
+                        <option value="sharpening">Sharpening</option>
+                        <option value="embossing">Embossing</option>
+                        <option value="invert">Invert</option>
+                        <option value="posterize">Posterize</option>
+                        <option value="thresholding">Thresholding</option>
                     </select>
-                    <button type="button" class="btn btn-primary btn-block mt-auto" id="apply-filter">Apply Filter</button>
+                    <button type="button" class="btn btn-primary btn-block mb-4" id="apply-filter">Apply Filter</button>
+                    <div>
+                        <h5 class="text-center mt-3">Other Tools</h5>
+                        <a href="/edit-image" class="btn btn-link">Image Adjustments</a>
+                        <a href="/#" class="btn btn-link">Image Adjustments</a>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
