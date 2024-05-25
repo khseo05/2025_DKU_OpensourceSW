@@ -1,4 +1,3 @@
-# Python code for Flask web application
 from flask import Flask, render_template, request
 import cv2
 import numpy as np
@@ -6,6 +5,8 @@ import base64
 
 app = Flask(__name__)
 
+
+# Image filters
 def apply_smoothing(image):
     smoothed_image = cv2.GaussianBlur(image, (5, 5), 0)
     return smoothed_image
@@ -73,16 +74,15 @@ def apply_filter(image, filter_name):
         return apply_thresholding(image)
     else:
         return image
-    
+
+
+# Noise cancel    
 def apply_median_filter(image):
     return cv2.medianBlur(image, 5)
 
 def apply_gaussian_filter(image):
     return cv2.GaussianBlur(image, (5, 5), 0)
-
-
-
-    
+   
 def apply_noise(image, filter_name):
     if filter_name == 'median_filter':
         return apply_median_filter(image)
@@ -90,7 +90,9 @@ def apply_noise(image, filter_name):
         return apply_gaussian_filter(image)
     else:
         return image
-    
+
+
+# image adjustment
 def apply_adjustments(image, adjustment_type, adjustment_value):
 
     if adjustment_type == 'brightness':
@@ -114,7 +116,7 @@ def apply_adjustments(image, adjustment_type, adjustment_value):
     return adjusted_image
 
 
-
+# routes
 @app.route('/')
 def index():
     return render_template('index.html')
