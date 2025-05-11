@@ -53,6 +53,18 @@ def apply_thresholding(image):
     ret, thresholded_image = cv2.threshold(image, 127, 255, cv2.THRESH_BINARY)
     return thresholded_image
 
+# 250511 정다훈 추가
+def apply_bilateral_filter(image):
+    bilateral_filtered_image = cv2.bilateralFilter(image, 9, 75, 75)
+    return bilateral_filtered_image
+
+
+# 250511 정다훈 추가
+def apply_laplacian(image):
+    laplacian_image = cv2.Laplacian(image, cv2.CV_64F)
+    return laplacian_image
+
+
 def apply_filter(image, filter_name):
     if filter_name == 'smoothing':
         return apply_smoothing(image)
@@ -72,6 +84,10 @@ def apply_filter(image, filter_name):
         return apply_posterize(image)
     elif filter_name == 'thresholding':
         return apply_thresholding(image)
+    elif filter_name == 'bilateral_filter':
+        return apply_bilateral_filter(image)
+    elif filter_name == 'laplacian':
+        return apply_laplacian(image)
     else:
         return image
 
@@ -174,6 +190,8 @@ def noise():
     _, img = cv2.imencode('.jpg', filtered_image)
     noise_image = base64.b64encode(img).decode('utf-8')
     return 'data:image/jpeg;base64,' + noise_image
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
