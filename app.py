@@ -2,6 +2,7 @@ from flask import Flask, render_template, request
 import cv2
 import numpy as np
 import base64
+import json
 
 app = Flask(__name__)
 
@@ -167,17 +168,26 @@ def image_adjustments():
 
     return 'data:image/jpeg;base64,' + encoded_image 
 
+# 250511 강현서 수정정
 @app.route('/filter', methods=['POST'])
 def filter():
     print("filter open")
     image = request.files['image']
-    npimg = np.fromstring(image.read(), np.uint8)
+    npimg = np.frombuffer(image.read(), np.uint8)
     cvimg = cv2.imdecode(npimg, cv2.IMREAD_COLOR)
-    filter_name = request.form['filter']
-    filtered_image = apply_filter(cvimg, filter_name)
-    _, buffer = cv2.imencode('.jpg', filtered_image)
+
+    filter_names = json.loads(request.form['filter'])
+    print(f"필터 목록: {filter_names}") 
+
+    for filter_name in filter_names: 
+        cvimg = apply_filter(cvimg, filter_name)
+        print(f"필터 적용:", {filter_name})
+
+    _, buffer = cv2.imencode('.jpg', cvimg)
     encoded_image = base64.b64encode(buffer).decode('utf-8')
-    return 'data:image/jpeg;base64,' + encoded_image
+    
+    response = {'dataUrl': f'data:image/jpeg;base64,{encoded_image}'}
+    return response
 
 @app.route('/remove-noise', methods=['POST'])
 def noise():
