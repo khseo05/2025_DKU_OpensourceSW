@@ -1,11 +1,17 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import cv2
 import numpy as np
 import base64
 import json
+import os
+
 
 app = Flask(__name__)
 
+PRESET_PATH = './presets' # 저장할 폴더 지정
+
+if not os.path.exists(PRESET_PATH):
+    os.makedirs(PRESET_PATH)
 
 # Image filters
 def apply_smoothing(image):
@@ -146,8 +152,6 @@ def chane_img():
 def remove_noise():
     return render_template('remove-noise.html')
 
-
-
 @app.route('/image-adjustments', methods=['POST'])
 def image_adjustments():
     image_file = request.files['image']
@@ -168,7 +172,9 @@ def image_adjustments():
 
     return 'data:image/jpeg;base64,' + encoded_image 
 
-# 250511 강현서 수정정
+
+# 250511 강현서 수정
+
 @app.route('/filter', methods=['POST'])
 def filter():
     print("filter open")
@@ -201,7 +207,43 @@ def noise():
     noise_image = base64.b64encode(img).decode('utf-8')
     return 'data:image/jpeg;base64,' + noise_image
 
+# 250520 강현서 수정
+@app.route('/save-preset', methods=['POST'])
+def save_preset():
+    data = request.json
+    name = data.get('name')  # preset 이름
+    filters = data.get('filters')  # 리스트 형태의 필터 목록
 
+    if not name or not filters:
+        return {'status': 'error', 'message': 'Invalid preset'}, 400
 
+    with open(os.path.join(PRESET_PATH, f'{name}.json'), 'w') as f:
+        json.dump(filters, f)
+
+    return {'status': 'success', 'message': f'Preset {name} saved.'}
+
+# 250520 강현서 수정 - 나만의 필터 로직 
+@app.route('/list-presets', methods=['GET'])
+def list_presets():
+    preset_dir = 'presets'  
+    if not os.path.exists(preset_dir):
+        return jsonify([])
+
+    preset_files = [f[:-5] for f in os.listdir(preset_dir) if f.endswith('.json')]
+    return jsonify(preset_files)
+
+@app.route('/load-preset', methods=['GET'])
+def load_preset():
+    preset_name = request.args.get('name')
+
+    if not preset_name:
+        return jsonify({'오류': '프리셋 이름 포함 X'}), 400
+    try:
+        with open(f'presets/{preset_name}.json', 'r') as f:
+            preset_data = json.load(f)
+        return jsonify(preset_data)
+    except FileNotFoundError:
+        return jsonify({'오류': '프리샛 발견 X'}), 404
+    
 if __name__ == '__main__':
     app.run(debug=True)

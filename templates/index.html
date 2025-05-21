@@ -144,6 +144,20 @@
             >
               Download Image
             </button>
+            <button
+              type="button"
+              class="btn btn-secondary btn-block mb-4"
+              id="save-preset"
+              disabled
+            >
+              Save Preset
+            </button>
+            <button 
+              type="button" 
+              class="btn btn-secondary btn-block mb-4" 
+              id="load-preset">
+              Load Preset
+            </button>
             <div>
               <h5 class="text-center mt-3">Other Tools</h5>
               <a href="/image-adjustments" class="btn btn-link"
@@ -210,13 +224,15 @@
           reader.readAsDataURL(file);
         });
 
-      // 250512 강현서 수정정
+
+      // 250512 강현서 수정
       document
         .getElementById('apply-filter')
         .addEventListener('click', function() {
             const fileInput = document.getElementById('upload-image');
             const file = fileInput.files[0];
             const errorMessage = document.getElementById('error-msg');
+
 
             // Error handling
             if (!file) {
@@ -240,6 +256,7 @@
             fetch('/filter', {
                 method: 'POST',
                 body: formData
+
             })
             .then(response => response.json())
             .then(data => {
@@ -252,6 +269,7 @@
                 document.getElementById('download-image').disabled = false;
                 document.getElementById('download-image').setAttribute('data-url', data.dataUrl);
             })
+
             .catch(error => console.error('Error:', error));
         });
 
@@ -268,6 +286,106 @@
             document.body.removeChild(a);
           }
         });
+ 
+      // 250520 강현서 수정 - 나만의 필터터
+      const fileInput = document.getElementById('upload-image');
+      const savePresetBtn = document.getElementById('save-preset');
+
+      function updateSavePresetBtn() {
+        const filtersSelected = document.querySelectorAll('input[name="filters"]:checked').length > 0;          savePresetBtn.disabled = !filtersSelected || !fileInput.files.length;
+      }
+
+      fileInput.addEventListener('change', () => {
+        updateSavePresetBtn();
+
+        // 기존 이미지 업로드 처리 유지
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        reader.onload = function (event) {
+          const img = document.createElement("img");
+          img.src = event.target.result;
+          img.classList.add("img-fluid");
+          document.getElementById("original-image").innerHTML = "";
+          document.getElementById("original-image").appendChild(img);
+          document.getElementById("edited-image").innerHTML = "";
+          document.getElementById("download-image").disabled = true;
+        };
+        if (file) reader.readAsDataURL(file);
+      });
+
+      document.querySelectorAll('input[name="filters"]').forEach(input => {
+        input.addEventListener('change', updateSavePresetBtn);
+      });
+
+      // Save Preset 버튼 클릭 -> 실행
+      savePresetBtn.addEventListener('click', () => {
+      const selectedFilters = Array.from(document.querySelectorAll('input[name="filters"]:checked'))
+                                   .map(input => input.value);
+        if (selectedFilters.length === 0) {
+          return;
+        }
+
+        const presetName = prompt('프리셋 이름 입력');
+        if (!presetName) return;
+
+        const data = {
+          name: presetName,
+          filters: selectedFilters
+        };
+
+        fetch('/save-preset', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(data)
+        })
+        .then(response => {
+          if (!response.ok) throw new Error('프리셋 저장 실패');
+          return response.json();
+        })
+        .then(result => {
+          alert(`프리셋: "${presetName}" 저장 성공`);
+        })
+        .catch(error => alert(error.message));
+    });
+
+    document.getElementById("load-preset").addEventListener("click", function () {
+          fetch("/list-presets")
+            .then(response => response.json())
+            .then(presets => {
+              if (presets.length === 0) {
+                alert("저장된 프리셋 X");
+                return;
+              }
+
+              const presetName = prompt("불러올 프리셋을 선택하세요:\n" + presets.join("\n"));
+              if (!presetName) {
+                return;
+              }
+
+          // 프리셋 로드 요청
+          fetch(`/load-preset?name=${encodeURIComponent(presetName)}`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json"
+            }
+          })
+          .then(response => {
+            if (!response.ok) throw new Error("프리셋 불러오기 실패");
+            return response.json();
+          })
+          .then(data => {
+            const filters = Array.isArray(data) ? data : (data.filters || []);
+            document.querySelectorAll('input[name="filters"]').forEach(input => {
+              input.checked = filters.includes(input.value.toLowerCase());
+            });
+          })
+          .catch(error => {
+            alert(error.message);
+          });
+        });
+      });
     </script>
   </body>
 </html>
