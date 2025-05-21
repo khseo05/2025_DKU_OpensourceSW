@@ -224,6 +224,7 @@
           reader.readAsDataURL(file);
         });
 
+
       // 250512 강현서 수정
       document
         .getElementById('apply-filter')
@@ -231,6 +232,7 @@
             const fileInput = document.getElementById('upload-image');
             const file = fileInput.files[0];
             const errorMessage = document.getElementById('error-msg');
+
 
             // Error handling
             if (!file) {
@@ -254,6 +256,7 @@
             fetch('/filter', {
                 method: 'POST',
                 body: formData
+
             })
             .then(response => response.json())
             .then(data => {
@@ -266,6 +269,7 @@
                 document.getElementById('download-image').disabled = false;
                 document.getElementById('download-image').setAttribute('data-url', data.dataUrl);
             })
+
             .catch(error => console.error('Error:', error));
         });
 
