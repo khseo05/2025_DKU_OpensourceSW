@@ -172,6 +172,15 @@ def image_adjustments():
 
     return 'data:image/jpeg;base64,' + encoded_image 
 
+#250525 강현서 수정 - 필터 경고문
+conflict_filters = {"grayscale", "invert", "posterize", "thresholding", "edge_detection"}
+def check_conflicting_filter(selected_filters):
+    conflicts = []
+    for f in selected_filters:
+        if f in conflict_filters and len(selected_filters) > 1:
+            conflicts.append(f)
+
+    return conflicts
 
 # 250511 강현서 수정
 
@@ -185,6 +194,9 @@ def filter():
     filter_names = json.loads(request.form['filter'])
     print(f"필터 목록: {filter_names}") 
 
+    # 충돌 필터 체크
+    conflicts = check_conflicting_filter(filter_names)
+
     for filter_name in filter_names: 
         cvimg = apply_filter(cvimg, filter_name)
         print(f"필터 적용:", {filter_name})
@@ -192,8 +204,9 @@ def filter():
     _, buffer = cv2.imencode('.jpg', cvimg)
     encoded_image = base64.b64encode(buffer).decode('utf-8')
     
-    response = {'dataUrl': f'data:image/jpeg;base64,{encoded_image}'}
-    return response
+    response = {'dataUrl': f'data:image/jpeg;base64,{encoded_image}',
+                'conflicts': list(conflicts)}
+    return jsonify(response)
 
 @app.route('/remove-noise', methods=['POST'])
 def noise():
