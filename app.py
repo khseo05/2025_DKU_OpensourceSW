@@ -5,6 +5,7 @@ import base64
 import json
 import os
 
+
 app = Flask(__name__)
 
 PRESET_PATH = './presets' # 저장할 폴더 지정
@@ -182,6 +183,7 @@ def check_conflicting_filter(selected_filters):
     return conflicts
 
 # 250511 강현서 수정
+
 @app.route('/filter', methods=['POST'])
 def filter():
     print("filter open")
