@@ -11,6 +11,7 @@ IMAGE FILTERING WEB APPLICATION USING PYTHON leverages Flask for the backend and
 1. **Image Filter**: Apply a variety of filters to an image, such as Grayscale, Smoothing, Edge Detection, Sepia Tone, Sharpening, Embossing, Invert, Posterize, and Thresholding.
 2. **Remove Noise**: Remove noise from images using Median and Gaussian Filters.
 3. **Image Adjustments**: Change the Brightness, Saturation, and Contrast of an image.
+4. **Save / Load Preset**: Allow users to save and load their frequently used filters.
 
 ## 🌟 Features
 
@@ -26,6 +27,8 @@ IMAGE FILTERING WEB APPLICATION USING PYTHON leverages Flask for the backend and
   - Invert
   - Posterize
   - Thresholding
+  - bilateral_filter
+  - laplacian
 - **Remove Noise**:
   - Median Filter
   - Gaussian Filter
@@ -46,9 +49,9 @@ IMAGE FILTERING WEB APPLICATION USING PYTHON leverages Flask for the backend and
 
 ### Image Filter
 ![UI-1](UI/UI_1.png)
-![UI-2](UI/UI-2.png)
-![UI-3](UI/UI-3.png)
-![UI-4](UI/UI-4.png)
+![UI-2](UI/UI_2.png)
+![UI-3](UI/UI_3.png)
+![UI-4](UI/UI_4.png)
 
 ### Image Adjustments
 ![UI-3](UI/UI-5.png)
