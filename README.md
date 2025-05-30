@@ -45,7 +45,7 @@ IMAGE FILTERING WEB APPLICATION USING PYTHON leverages Flask for the backend and
 ## 📸 Screenshots
 
 ### Image Filter
-![UI-1](UI/UI-1.png)
+![UI-1](UI/UI_1.png)
 ![UI-2](UI/UI-2.png)
 ![UI-3](UI/UI-3.png)
 ![UI-4](UI/UI-4.png)
