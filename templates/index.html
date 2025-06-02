@@ -80,7 +80,7 @@
       </div>
       <div class="row">
         <div class="col-md-4">
-          <div class="card p-4" style="height: 75vh; height: auto;">
+          <div class="card p-4" style="height: 75vh; height: auto">
             <h5 class="card-title text-center mb-4">Image Upload</h5>
             <div class="custom-file mb-3">
               <input
@@ -95,38 +95,131 @@
             </div>
             <div class="mb-4" id="filter-options">
               <!-- 250512 강현서 필터 선택 버튼 UI 수정 -->
-              <div style="display: inline-block; width: 48%; margin-right: 2%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="grayscale"> Grayscale</label>
+              <div
+                style="
+                  display: inline-block;
+                  width: 48%;
+                  margin-right: 2%;
+                  margin-bottom: 10px;
+                "
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="grayscale" />
+                  Grayscale</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="smoothing"> Smoothing</label>
+              <div
+                style="display: inline-block; width: 48%; margin-bottom: 10px"
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="smoothing" />
+                  Smoothing</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-right: 2%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="edge_detection"> Edge Detection</label>
+              <div
+                style="
+                  display: inline-block;
+                  width: 48%;
+                  margin-right: 2%;
+                  margin-bottom: 10px;
+                "
+              >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="filters"
+                    value="edge_detection"
+                  />
+                  Edge Detection</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="sepia"> Sepia Tone</label>
+              <div
+                style="display: inline-block; width: 48%; margin-bottom: 10px"
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="sepia" /> Sepia
+                  Tone</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-right: 2%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="sharpening"> Sharpening</label>
+              <div
+                style="
+                  display: inline-block;
+                  width: 48%;
+                  margin-right: 2%;
+                  margin-bottom: 10px;
+                "
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="sharpening" />
+                  Sharpening</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="embossing"> Embossing</label>
+              <div
+                style="display: inline-block; width: 48%; margin-bottom: 10px"
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="embossing" />
+                  Embossing</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-right: 2%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="invert"> Invert</label>
+              <div
+                style="
+                  display: inline-block;
+                  width: 48%;
+                  margin-right: 2%;
+                  margin-bottom: 10px;
+                "
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="invert" />
+                  Invert</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="posterize"> Posterize</label>
+              <div
+                style="display: inline-block; width: 48%; margin-bottom: 10px"
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="posterize" />
+                  Posterize</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-right: 2%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="thresholding"> Thresholding</label>
+              <div
+                style="
+                  display: inline-block;
+                  width: 48%;
+                  margin-right: 2%;
+                  margin-bottom: 10px;
+                "
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="thresholding" />
+                  Thresholding</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="Bilateral_filter"> bilateral_filter</label>
+              <div
+                style="display: inline-block; width: 48%; margin-bottom: 10px"
+              >
+                <label
+                  ><input
+                    type="checkbox"
+                    name="filters"
+                    value="Bilateral_filter"
+                  />
+                  bilateral_filter</label
+                >
               </div>
-              <div style="display: inline-block; width: 48%; margin-right: 2%; margin-bottom: 10px;">
-                <label><input type="checkbox" name="filters" value="laplacian"> Laplacian</label>
+              <div
+                style="
+                  display: inline-block;
+                  width: 48%;
+                  margin-right: 2%;
+                  margin-bottom: 10px;
+                "
+              >
+                <label
+                  ><input type="checkbox" name="filters" value="laplacian" />
+                  Laplacian</label
+                >
               </div>
             </div>
             <button
@@ -152,10 +245,11 @@
             >
               Save Preset
             </button>
-            <button 
-              type="button" 
-              class="btn btn-secondary btn-block mb-4" 
-              id="load-preset">
+            <button
+              type="button"
+              class="btn btn-secondary btn-block mb-4"
+              id="load-preset"
+            >
               Load Preset
             </button>
             <div>
@@ -166,6 +260,8 @@
               <!-- image-adjustments.html-->
               <a href="/remove-noise" class="btn btn-link">Remove Noise</a>
               <!-- remove-noise.html-->
+              <a href="/education" class="btn btn-link">Education</a>
+              <!-- education.html-->
             </div>
           </div>
         </div>
@@ -224,58 +320,64 @@
           reader.readAsDataURL(file);
         });
 
-
       // 250512 강현서 수정
       document
-        .getElementById('apply-filter')
-        .addEventListener('click', function() {
-            const fileInput = document.getElementById('upload-image');
-            const file = fileInput.files[0];
-            const errorMessage = document.getElementById('error-msg');
+        .getElementById("apply-filter")
+        .addEventListener("click", function () {
+          const fileInput = document.getElementById("upload-image");
+          const file = fileInput.files[0];
+          const errorMessage = document.getElementById("error-msg");
 
+          // Error handling
+          if (!file) {
+            document.getElementById("error-msg").innerText =
+              "Please upload an image first.";
+            document.getElementById("error-msg").style.display = "block";
+            setTimeout(() => {
+              document.getElementById("error-msg").style.display = "none";
+            }, 3000); // Hide after 3 seconds
+            return;
+          }
 
-            // Error handling
-            if (!file) {
-                document.getElementById('error-msg').innerText = "Please upload an image first.";
-                document.getElementById('error-msg').style.display = "block";
-                setTimeout(() => {
-                    document.getElementById('error-msg').style.display = "none";
-                }, 3000); // Hide after 3 seconds
-                return;
-            }
+          const filterOptions = document.querySelectorAll(
+            'input[name="filters"]:checked'
+          );
+          const selectedFilters = Array.from(filterOptions).map(
+            (option) => option.value
+          );
 
-            const filterOptions = document.querySelectorAll('input[name="filters"]:checked');
-            const selectedFilters = Array.from(filterOptions).map(option => option.value);
-            
-            console.log('Selected filters:', selectedFilters); 
+          console.log("Selected filters:", selectedFilters);
 
-            const formData = new FormData();
-            formData.append('image', file);
-            formData.append('filter', JSON.stringify(selectedFilters));
+          const formData = new FormData();
+          formData.append("image", file);
+          formData.append("filter", JSON.stringify(selectedFilters));
 
-            fetch('/filter', {
-                method: 'POST',
-                body: formData
-
-            })
-            .then(response => response.json())
-            .then(data => {
+          fetch("/filter", {
+            method: "POST",
+            body: formData,
+          })
+            .then((response) => response.json())
+            .then((data) => {
               if (data.conflicts && data.conflicts.length > 0) {
                 alert(
-                   `다음 필터는 함께 사용할 경우 다른 필터가 적용되지 않을 수 있습니다.\n\n- ${data.conflicts.join('\n- ')}\n\n`
+                  `다음 필터는 함께 사용할 경우 다른 필터가 적용되지 않을 수 있습니다.\n\n- ${data.conflicts.join(
+                    "\n- "
+                  )}\n\n`
                 );
               }
-                console.log('Received data:', data);
-                const img = document.createElement('img');
-                img.src = data.dataUrl; // 서버에서 받은 dataUrl을 사용
-                img.classList.add('img-fluid');
-                document.getElementById('edited-image').innerHTML = '';
-                document.getElementById('edited-image').appendChild(img);
-                document.getElementById('download-image').disabled = false;
-                document.getElementById('download-image').setAttribute('data-url', data.dataUrl);
+              console.log("Received data:", data);
+              const img = document.createElement("img");
+              img.src = data.dataUrl; // 서버에서 받은 dataUrl을 사용
+              img.classList.add("img-fluid");
+              document.getElementById("edited-image").innerHTML = "";
+              document.getElementById("edited-image").appendChild(img);
+              document.getElementById("download-image").disabled = false;
+              document
+                .getElementById("download-image")
+                .setAttribute("data-url", data.dataUrl);
             })
 
-            .catch(error => console.error('Error:', error));
+            .catch((error) => console.error("Error:", error));
         });
 
       document
@@ -291,16 +393,18 @@
             document.body.removeChild(a);
           }
         });
- 
+
       // 250520 강현서 수정 - 나만의 필터터
-      const fileInput = document.getElementById('upload-image');
-      const savePresetBtn = document.getElementById('save-preset');
+      const fileInput = document.getElementById("upload-image");
+      const savePresetBtn = document.getElementById("save-preset");
 
       function updateSavePresetBtn() {
-        const filtersSelected = document.querySelectorAll('input[name="filters"]:checked').length > 0;          savePresetBtn.disabled = !filtersSelected || !fileInput.files.length;
+        const filtersSelected =
+          document.querySelectorAll('input[name="filters"]:checked').length > 0;
+        savePresetBtn.disabled = !filtersSelected || !fileInput.files.length;
       }
 
-      fileInput.addEventListener('change', () => {
+      fileInput.addEventListener("change", () => {
         updateSavePresetBtn();
 
         // 기존 이미지 업로드 처리 유지
@@ -318,79 +422,90 @@
         if (file) reader.readAsDataURL(file);
       });
 
-      document.querySelectorAll('input[name="filters"]').forEach(input => {
-        input.addEventListener('change', updateSavePresetBtn);
+      document.querySelectorAll('input[name="filters"]').forEach((input) => {
+        input.addEventListener("change", updateSavePresetBtn);
       });
 
       // Save Preset 버튼 클릭 -> 실행
-      savePresetBtn.addEventListener('click', () => {
-      const selectedFilters = Array.from(document.querySelectorAll('input[name="filters"]:checked'))
-                                   .map(input => input.value);
+      savePresetBtn.addEventListener("click", () => {
+        const selectedFilters = Array.from(
+          document.querySelectorAll('input[name="filters"]:checked')
+        ).map((input) => input.value);
         if (selectedFilters.length === 0) {
           return;
         }
 
-        const presetName = prompt('프리셋 이름 입력');
+        const presetName = prompt("프리셋 이름 입력");
         if (!presetName) return;
 
         const data = {
           name: presetName,
-          filters: selectedFilters
+          filters: selectedFilters,
         };
 
-        fetch('/save-preset', {
-          method: 'POST',
+        fetch("/save-preset", {
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(data)
+          body: JSON.stringify(data),
         })
-        .then(response => {
-          if (!response.ok) throw new Error('프리셋 저장 실패');
-          return response.json();
-        })
-        .then(result => {
-          alert(`프리셋: "${presetName}" 저장 성공`);
-        })
-        .catch(error => alert(error.message));
-    });
+          .then((response) => {
+            if (!response.ok) throw new Error("프리셋 저장 실패");
+            return response.json();
+          })
+          .then((result) => {
+            alert(`프리셋: "${presetName}" 저장 성공`);
+          })
+          .catch((error) => alert(error.message));
+      });
 
-    document.getElementById("load-preset").addEventListener("click", function () {
+      document
+        .getElementById("load-preset")
+        .addEventListener("click", function () {
           fetch("/list-presets")
-            .then(response => response.json())
-            .then(presets => {
+            .then((response) => response.json())
+            .then((presets) => {
               if (presets.length === 0) {
                 alert("저장된 프리셋 X");
                 return;
               }
 
-              const presetName = prompt("불러올 프리셋을 선택하세요:\n" + presets.join("\n"));
+              const presetName = prompt(
+                "불러올 프리셋을 선택하세요:\n" + presets.join("\n")
+              );
               if (!presetName) {
                 return;
               }
 
-          // 프리셋 로드 요청
-          fetch(`/load-preset?name=${encodeURIComponent(presetName)}`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json"
-            }
-          })
-          .then(response => {
-            if (!response.ok) throw new Error("프리셋 불러오기 실패");
-            return response.json();
-          })
-          .then(data => {
-            const filters = Array.isArray(data) ? data : (data.filters || []);
-            document.querySelectorAll('input[name="filters"]').forEach(input => {
-              input.checked = filters.includes(input.value.toLowerCase());
+              // 프리셋 로드 요청
+              fetch(`/load-preset?name=${encodeURIComponent(presetName)}`, {
+                method: "GET",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+              })
+                .then((response) => {
+                  if (!response.ok) throw new Error("프리셋 불러오기 실패");
+                  return response.json();
+                })
+                .then((data) => {
+                  const filters = Array.isArray(data)
+                    ? data
+                    : data.filters || [];
+                  document
+                    .querySelectorAll('input[name="filters"]')
+                    .forEach((input) => {
+                      input.checked = filters.includes(
+                        input.value.toLowerCase()
+                      );
+                    });
+                })
+                .catch((error) => {
+                  alert(error.message);
+                });
             });
-          })
-          .catch(error => {
-            alert(error.message);
-          });
         });
-      });
     </script>
   </body>
 </html>

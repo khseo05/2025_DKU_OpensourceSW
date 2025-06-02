@@ -7,15 +7,16 @@ import os
 
 
 app = Flask(__name__)
-
+    
 PRESET_PATH = './presets' # 저장할 폴더 지정
 
 if not os.path.exists(PRESET_PATH):
     os.makedirs(PRESET_PATH)
 
 # Image filters
-def apply_smoothing(image):
-    smoothed_image = cv2.GaussianBlur(image, (5, 5), 0)
+def apply_smoothing(image, strength=5): # strength는 커널 크기로 사용, 홀수여야 함
+    kernel_size = max(1, int(strength) // 2 * 2 + 1) # 1 이상의 홀수로 만듦
+    smoothed_image = cv2.GaussianBlur(image, (kernel_size, kernel_size), 0)
     return smoothed_image
 
 def apply_edge_detection(image):
@@ -33,9 +34,10 @@ def apply_sepia(image):
     sepia_image = cv2.transform(image, kernel)
     return sepia_image
 
-def apply_sharpening(image):
+def apply_sharpening(image, strength=9): # strength는 커널의 중앙값으로 사용
+    k = int(strength)
     kernel = np.array([[-1, -1, -1],
-                       [-1, 9, -1],
+                       [-1, k, -1],
                        [-1, -1, -1]])
     sharpened_image = cv2.filter2D(image, -1, kernel)
     return sharpened_image
@@ -51,8 +53,12 @@ def apply_invert(image):
     inverted_image = cv2.bitwise_not(image)
     return inverted_image
 
-def apply_posterize(image):
-    posterized_image = cv2.convertScaleAbs(image, alpha=(1/32) * 32, beta=0)
+def apply_posterize(image, strength=4): # strength는 줄일 비트 수 (클수록 색상 수가 적어짐)
+    num_levels = max(1, 8 - int(strength)) # 1~7 사이의 값 (2^1 ~ 2^7 레벨)
+    if num_levels <= 0: # strength가 너무 커서 num_levels가 0 이하가 되는 경우 방지
+        num_levels = 1
+    shift = 8 - num_levels
+    posterized_image = (image >> shift) << shift
     return posterized_image
 
 
@@ -61,15 +67,25 @@ def apply_thresholding(image):
     return thresholded_image
 
 # 250511 정다훈 추가
-def apply_bilateral_filter(image):
-    bilateral_filtered_image = cv2.bilateralFilter(image, 9, 75, 75)
-    return bilateral_filtered_image
-
-
-# 250511 정다훈 추가
 def apply_laplacian(image):
     laplacian_image = cv2.Laplacian(image, cv2.CV_64F)
     return laplacian_image
+
+# 250601 추가: 픽셀화 필터
+def apply_pixelate(image, block_size=10):
+    # 이미지 크기 가져오기
+    (h, w) = image.shape[:2]
+
+    # 블록 크기가 유효한지 확인 (너무 작거나 크지 않게)
+    block_size = max(2, min(block_size, min(h, w) // 2))
+
+    # 이미지를 block_size에 맞춰 다운샘플링
+    temp_image = cv2.resize(image, (w // block_size, h // block_size), interpolation=cv2.INTER_LINEAR)
+    
+    # 다시 원래 크기로 업샘플링하여 픽셀화 효과 생성
+    pixelated_image = cv2.resize(temp_image, (w, h), interpolation=cv2.INTER_NEAREST)
+    
+    return pixelated_image
 
 
 def apply_filter(image, filter_name):
@@ -91,10 +107,10 @@ def apply_filter(image, filter_name):
         return apply_posterize(image)
     elif filter_name == 'thresholding':
         return apply_thresholding(image)
-    elif filter_name == 'bilateral_filter':
-        return apply_bilateral_filter(image)
     elif filter_name == 'laplacian':
         return apply_laplacian(image)
+    elif filter_name == 'pixelate': # 250601 추가
+        return apply_pixelate(image) # 기본 강도로 호출 (필요시 education_html에서 강도 받아오도록 수정)
     else:
         return image
 
@@ -151,6 +167,10 @@ def chane_img():
 @app.route('/remove-noise')
 def remove_noise():
     return render_template('remove-noise.html')
+
+@app.route('/education') # 250601 추가: 교육 페이지 라우트
+def education_page():
+    return render_template('education.html')
 
 @app.route('/image-adjustments', methods=['POST'])
 def image_adjustments():
@@ -258,5 +278,60 @@ def load_preset():
     except FileNotFoundError:
         return jsonify({'오류': '프리샛 발견 X'}), 404
     
+@app.route('/process_education_image', methods=['POST']) # 250601 추가: 교육 페이지 필터 처리
+def process_education_image():
+    data = request.get_json()
+    filter_type = data.get('filter_type')
+    strength = data.get('strength')
+    image_path = data.get('image_path') # '/static/sample_image.jpg'
+
+    if not all([filter_type, strength, image_path]):
+        return jsonify({'error': 'Missing data'}), 400
+
+    # image_path가 'static/...' 형태이므로, 실제 파일 시스템 경로로 변환
+    # os.path.join은 운영체제에 맞는 경로 구분자를 사용합니다.
+    # app.static_folder는 Flask 앱의 static 폴더 경로입니다. (기본값: 'static')
+    base_dir = os.path.dirname(os.path.abspath(__file__)) # app.py 가 있는 디렉토리
+    actual_image_path = os.path.join(base_dir, image_path.lstrip('/'))
+
+
+    if not os.path.exists(actual_image_path):
+        return jsonify({'error': f'Image not found at {actual_image_path}'}), 404
+
+    try:
+        image = cv2.imread(actual_image_path)
+        if image is None:
+            return jsonify({'error': f'Could not read image at {actual_image_path}'}), 500
+
+        processed_image = None
+        # strength를 정수형으로 변환하여 각 필터 함수에 전달
+        try:
+            strength_val = int(strength)
+        except ValueError:
+            return jsonify({'error': 'Strength must be an integer'}), 400
+
+        if filter_type == 'pixelate':
+            processed_image = apply_pixelate(image, strength_val)
+        elif filter_type == 'smoothing':
+            processed_image = apply_smoothing(image, strength_val)
+        elif filter_type == 'sharpening':
+            processed_image = apply_sharpening(image, strength_val)
+        elif filter_type == 'posterize':
+            processed_image = apply_posterize(image, strength_val) 
+        else:
+            return jsonify({'error': 'Unsupported filter type'}), 400
+
+        if processed_image is None:
+             return jsonify({'error': 'Filter could not be applied'}), 500
+
+        _, buffer = cv2.imencode('.jpg', processed_image)
+        encoded_image = base64.b64encode(buffer).decode('utf-8')
+        
+        return jsonify({'dataUrl': f'data:image/jpeg;base64,{encoded_image}'})
+
+    except Exception as e:
+        print(f"Error processing education image: {e}")
+        return jsonify({'error': str(e)}), 500
+
 if __name__ == '__main__':
     app.run(debug=True)
