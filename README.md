@@ -51,24 +51,24 @@
 
 ### 1. 메인 페이지 (필터 적용)
 
-![메인 페이지 Smoothing 필터 적용](sources/메인 페이지 Smoothing 필터 적용.png)
+![메인 페이지 Smoothing 필터 적용](sources/메인_페이지_Smoothing_필터_적용.png)
 
 ### 2. 나만의 필터 (프리셋 저장 및 로드)
 
-![나만의 필터 - 프리셋 저장](sources/나만의 필터 - 프리셋 저장.png)
-![나만의 필터 - 프리셋 로드](sources/나만의 필터 - 프리셋 로드.png)
+![나만의 필터 - 프리셋 저장](sources/나만의_필터_-_프리셋_저장.png)
+![나만의 필터 - 프리셋 로드](sources/나만의_필터_프리셋_로드.png)
 
 ### 3. 이미지 조정 페이지
 
-![이미지 조정 페이지 Brightness 조절](sources/이미지 조정 페이지 Brightness 조절.png)
+![이미지 조정 페이지 Brightness 조절](sources/이미지_조정_페이지_Brightness_조절.png)
 
 ### 4. 노이즈 제거 페이지
 
-![노이즈 제거 페이지 Gaussian Filter 적용](sources/노이즈 제거 페이지 Gaussian Filter 적용.png)
+![노이즈 제거 페이지 Gaussian Filter 적용](sources/노이즈_제거_페이지_Gaussian_Filter_적용.png)
 
 ### 5. 필터 학습 페이지
 
-![필터 학습 페이지 Sharpening 조절](sources/필터 학습 페이지 Sharpening 조절.png)
+![필터 학습 페이지 Sharpening 조절](sources/필터_학습_페이지_Sharpening_조절.png)
 
 ## 🚀 실행 방법
 
