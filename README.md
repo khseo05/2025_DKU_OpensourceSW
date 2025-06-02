@@ -5,7 +5,9 @@
 ## 🌟 주요 기능
 
 - **이미지 업로드**: 로컬 장치에서 이미지를 손쉽게 업로드합니다.
+
 - **다양한 필터 적용**:
+
   - 그레이스케일 (Grayscale)
   - 스무딩 (Smoothing / Blur)
   - 엣지 검출 (Edge Detection)
@@ -16,18 +18,27 @@
   - 포스터화 (Posterize)
   - 이진화 (Thresholding)
   - 픽셀화 (Pixelate)
+
 - **나만의 필터 프리셋**: 자주 사용하는 필터 조합을 프리셋으로 저장하고 불러올 수 있습니다.
+
 - **노이즈 제거**:
+
   - 미디언 필터 (Median Filter)
   - 가우시안 필터 (Gaussian Filter)
+
 - **이미지 조정**:
+
   - 밝기 (Brightness)
   - 채도 (Saturation)
   - 대비 (Contrast)
+
 - **필터 학습 페이지 (Education Page)**:
+
   - 주요 필터(픽셀화, 스무딩, 샤프닝, 포스터화)의 효과를 실시간으로 비교하며 학습할 수 있습니다.
   - 각 필터의 강도를 조절하며 변화를 직접 확인할 수 있습니다.
+
 - **실시간 미리보기**: 필터 및 조정 사항을 적용하면서 변경된 이미지를 바로 확인할 수 있습니다.
+
 - **이미지 다운로드**: 편집된 최종 이미지를 사용자의 장치에 저장합니다.
 
 ## 🛠️ 사용 기술
@@ -40,24 +51,24 @@
 
 ### 1. 메인 페이지 (필터 적용)
 
-![메인 페이지 Smoothing 필터 적용](sources/Screenshot 2025-06-02 at 16.27.08.png)
+![메인 페이지 Smoothing 필터 적용](sources/메인 페이지 Smoothing 필터 적용.png)
 
 ### 2. 나만의 필터 (프리셋 저장 및 로드)
 
-![나만의 필터 - 프리셋 저장](sources/Screenshot 2025-06-02 at 16.29.16.png)
-![나만의 필터 - 프리셋 로드](sources/Screenshot 2025-06-02 at 16.29.48.png)
+![나만의 필터 - 프리셋 저장](sources/나만의 필터 - 프리셋 저장.png)
+![나만의 필터 - 프리셋 로드](sources/나만의 필터 - 프리셋 로드.png)
 
 ### 3. 이미지 조정 페이지
 
-![이미지 조정 페이지 Brightness 조절](sources/Screenshot 2025-06-02 at 16.33.18.png)
+![이미지 조정 페이지 Brightness 조절](sources/이미지 조정 페이지 Brightness 조절.png)
 
 ### 4. 노이즈 제거 페이지
 
-![노이즈 제거 페이지 Gaussian Filter 적용](sources/Screenshot 2025-06-02 at 16.33.32.png)
+![노이즈 제거 페이지 Gaussian Filter 적용](sources/노이즈 제거 페이지 Gaussian Filter 적용.png)
 
 ### 5. 필터 학습 페이지
 
-![필터 학습 페이지 Sharpening 조절](sources/Screenshot 2025-06-02 at 16.33.50.png)
+![필터 학습 페이지 Sharpening 조절](sources/필터 학습 페이지 Sharpening 조절.png)
 
 ## 🚀 실행 방법
 
